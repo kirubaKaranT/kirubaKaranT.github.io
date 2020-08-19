@@ -1,0 +1,32 @@
+<html>
+
+  <head>
+    <!-- Load Tensorflow and BodyPix -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2.0"></script>
+  </head>
+
+  <body>
+      <h1>zoho </h1>
+    <img  id='image' src='elon.jpg' crossorigin='anonymous' />
+    <canvas id="canvas"></canvas>
+  </body>
+
+  <script>
+    const img = document.getElementById('image');
+    const canvas = document.getElementById('canvas');
+
+    async function loadAndBlur() {
+      const net = await bodyPix.load();
+      const segmentation = await net.segmentPerson(img);
+
+      const backgroundBlurAmount = 9;
+      const edgeBlurAmount = 3;
+      const flipHorizontal = false;
+
+      bodyPix.drawBokehEffect(canvas, img, segmentation, backgroundBlurAmount, edgeBlurAmount, flipHorizontal);
+    }
+    loadAndBlur();
+  </script>
+
+</html>
